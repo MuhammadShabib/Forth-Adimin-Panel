@@ -1,15 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa" dir="rtl">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel</title>
+    <link rel="stylesheet" href="assets/bootstrap-5.3.2-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/bootstrap-icons-1.11.1/bootstrap-icons.min.css">
     <link rel="stylesheet" href="assets/css/main.css">
+
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
 </head>
 
 <body>
+    <section x-data="toggleSidebar">
+        <section x-cloak class="sidebar" :class="open || 'inactive'">
+            <div>
+                <h4 class="fw-bold"> M S H </h4>
+                <i @click="toggle" class="bi bi-x fs-1"></i>
 
-</body>
+            </div>
+
+        </section>
+        <section class="main" :class="open || 'active'">
+            <header>
+                <i @click="toggle" class="bi bi-justify"></i>
+            </header>
+            <div class="content"> Content</div>
+        </section>
+    </section>
+
+    <script src="assets/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/alpineComponents.js"></script>
 
 </html>
