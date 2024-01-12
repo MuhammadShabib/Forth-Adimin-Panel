@@ -17,21 +17,295 @@
     <section x-data="toggleSidebar">
         <section x-cloak class="sidebar" :class="open || 'inactive'">
             <div>
-                <h4 class="fw-bold"> M S H </h4>
-                <i @click="toggle" class="bi bi-x fs-1"></i>
+                <div class="d-flex align-items-center justify-content-between justify-content-lg-center">
+                    <h4 class="fw-bold text-lg-center"> M S H </h4>
+                    <i @click="toggle" class="d-lg-none bi bi-x toggl"></i></div>
+                <div class="mt-4">
+                    <ul class="list-unstyled">
+                        <li class="sidebar-item active">
+                            <a href="index.html" class="sidebar-link">
+                                <i class="ms-2 bi bi-grid-fill "></i>
+                                <span class="ml-3">داشبورد</span>
+                            </a>
+                        </li>
+                        <li x-data="dropdown" class="sidebar-item">
+                            <div @click="toggle" class="sidebar-link">
+                                <i class="ms-2 bi bi-shop"></i>
+                                <span>فروشگاه</span>
+                                <i class="bi bi-chevron-down me-auto"></i>
+                            </div>
+                            <ul x-show="open" x-transition class="submenu">
+                                <li class="submenu-item">
+                                    <a href="#"> لیست فروشگاه ها</a>
+                                </li>
+                                <li class="submenu-item">
+                                    <a href="#"> ایجاد فروشگاه </a>
+                                </li>
+                                <li class="submenu-item">
+                                    <a href="#"> ویرایش فروشگاه</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li x-data="dropdown" class="sidebar-item">
+                            <div @click="toggle" class="sidebar-link">
+                                <i class="ms-2 bi bi-box-seam"></i>
+                                <span>محصولات</span>
+                                <i class="bi bi-chevron-down me-auto"></i>
+                            </div>
+                            <ul x-show="open" x-transition class="submenu">
+                                <li class="submenu-item">
+                                    <a href="#"> لیست محصولات</a>
+                                </li>
+                                <li class="submenu-item">
+                                    <a href="#"> ایجاد محصول </a>
+                                </li>
+                                <li class="submenu-item">
+                                    <a href="#"> ویرایش محصول</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li x-data="dropdown" class="sidebar-item">
+                            <div @click="toggle" class="sidebar-link">
+                                <i class="ms-2 bi bi-basket-fill"></i>
+                                <span>سفارشات</span>
+                                <i class="bi bi-chevron-down me-auto"></i>
+                            </div>
+                            <ul x-show="open" x-transition class="submenu">
+                                <li class="submenu-item">
+                                    <a href="#"> لیست سفارشات</a>
+                                </li>
+                                <li class="submenu-item">
+                                    <a href="#"> سفارشات تایید شده </a>
+                                </li>
+                                <li class="submenu-item">
+                                    <a href="#"> سفارشات تایید نشده</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link">
+                                <i class="ms-2 bi bi-chat-right-dots-fill"></i>
+                                <span class="ml-3">تکت</span>
+                            </a>
+                        </li>
+                        <li x-data="dropdown" class="sidebar-item">
+                            <div @click="toggle" class="sidebar-link">
+                                <i class="ms-2 bi bi-people-fill"></i>
+                                <span>کاربران</span>
+                                <i class="bi bi-chevron-down me-auto"></i>
+                            </div>
+                            <ul x-show="open" x-transition class="submenu">
+                                <li class="submenu-item">
+                                    <a href="#"> لیست کاربران</a>
+                                </li>
+                                <li class="submenu-item">
+                                    <a href="#"> ایجاد کاربر جدید </a>
+                                </li>
+                                <li class="submenu-item">
+                                    <a href="#"> ویرایش کاربر</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li x-data="dropdown" class="sidebar-item">
+                            <div @click="toggle" class="sidebar-link">
+                                <i class="ms-2 bi bi-chat-dots-fill"></i>
+                                <span>کامنت ها</span>
+                                <i class="bi bi-chevron-down me-auto"></i>
+                            </div>
+                            <ul x-show="open" x-transition class="submenu">
+                                <li class="submenu-item">
+                                    <a href="#"> لیست کامنت ها</a>
+                                </li>
+                                <li class="submenu-item">
+                                    <a href="#"> کامنت های تایید شده </a>
+                                </li>
+                                <li class="submenu-item">
+                                    <a href="#"> کامنت های تایید نشده </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
 
             </div>
 
         </section>
         <section class="main" :class="open || 'active'">
-            <header>
-                <i @click="toggle" class="bi bi-justify"></i>
+            <header class="d-flex justify-content-between p-3 align-items-center">
+                <div>
+                    <i @click=" toggle " class="toggle-sidebar-icon bi bi-justify "></i>
+
+                </div>
+                <div class="d-flex align-items-center">
+
+                    <div class="dropdown ">
+                        <div class="dropdown-toggle" data-bs-toggle="dropdown">
+                            <span class="badge bg-red position-absolute top-0 start-100 translate-middle rounded-pill mb-0">4</span>
+                            <i class="bi bi-envelope fs-4 text-gray-600"></i>
+                        </div>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item fs-7" href="#">لورم ایپسوم ادگی نامفهوم</a></li>
+                            <li><a class="dropdown-item fs-7" href="#">>لورم ایپسوم</a></li>
+                            <li><a class="dropdown-item fs-7" href="#">لورم ایپسوم ساختگی</a></li>
+                        </ul>
+                    </div>
+                    <div class="dropdown mx-3">
+                        <div class="dropdown-toggle" data-bs-toggle="dropdown">
+
+                            <i class="bi bi-bell fs-4 text-gray-600"></i>
+                        </div>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item fs-7" href="#">لورم ایپسوم ادگی نامفهوم</a></li>
+                            <li><a class="dropdown-item fs-7" href="#">لورم ایپسوم</a></li>
+                            <li><a class="dropdown-item fs-7" href="#">لورم ایپسوم ساختگی</a></li>
+                        </ul>
+                    </div>
+                    <div class="dropdown " dir="rtl">
+                        <div class="dropdown-toggle profile d-flex align-items-center" data-bs-toggle="dropdown">
+                            <img src="assets/images/7.jpg" class="img-fluid rounded-circle ms-2" width="45" alt="">
+                            <div>
+                                <h6 class="fs-6 fw-bold text-gray-600 mb-0"> محمد شبیب</h6>
+                                <p class="fs-8 text-gray-600 mb-0">سوپر ادمین</p>
+                            </div>
+                        </div>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item fs-7 d-flex align-items-center justify-content-between" href="#">
+                                    <i class="bi bi-person fs-5 ms-1"></i>
+                                    <span>پروفایل</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item fs-7 d-flex align-items-center justify-content-between" href="#">
+                                    <i class="bi bi-gear fs-6"></i>
+                                    <span> تنظیمات </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item fs-7 d-flex align-items-center justify-content-between" href="#">
+                                    <i class=" bi bi-wallet fs-6"></i>
+                                    <span>حساب کاربری</span>
+                                </a>
+                            </li>
+                            <hr class="dropdown-divider">
+                            <li>
+                                <a class="dropdown-item fs-7 d-flex align-items-center justify-content-between" href="#">
+                                    <i class=" bi bi-box-arrow-left fs-5"></i>
+                                    <span>خروج</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
             </header>
-            <div class="content"> Content</div>
+            <div class="content p-2 p-lg-4 ">
+                <div class="container-fluid">
+                    <div class="row gy-4">
+                        <div class="col-xl-9">
+                            <!-- stats  -->
+                            <div class="row g-4">
+                                <div class="col-6 col-xl-3">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="row g-4">
+                                                <div class="col-md-4">
+                                                    <div class="stats-icon bg-purpel">
+                                                        <i class="bi bi-eye-fill  lh-0"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <h6 class="fs-7 text-muted"> نمایش پروفایل </h6>
+                                                    <h6 class="fw-bold mb-0 purecounter " data-purecounter-start="0" data-purecounter-end="21983">0</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-xl-3">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="row g-4">
+                                                <div class="col-md-4">
+                                                    <div class="stats-icon bg-blue">
+                                                        <i class="bi bi-person-fill  lh-0"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <h6 class="fs-7 text-muted"> نمایش پروفایل </h6>
+                                                    <h6 class="fw-bold mb-0 purecounter " data-purecounter-start="0" data-purecounter-end="60998">0</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-xl-3">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="row g-4">
+                                                <div class="col-md-4">
+                                                    <div class="stats-icon bg-green">
+                                                        <i class="bi bi-person-plus-fill lh-0"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <h6 class="fs-7 text-muted"> نمایش پروفایل </h6>
+                                                    <h6 class="fw-bold mb-0 purecounter " data-purecounter-start="0" data-purecounter-end="138800">0</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-xl-3">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="row g-4">
+                                                <div class="col-md-4">
+                                                    <div class="stats-icon bg-red">
+                                                        <i class="bi bi-bookmark-dash-fill lh-0"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <h6 class="fs-7 text-muted"> نمایش پروفایل </h6>
+                                                    <h6 class="fw-bold mb-0 purecounter " data-purecounter-start="0" data-purecounter-end="18003">0</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3">
+                            <div class="card">
+                                <div class="card-body d-flex align-items-center p-4">
+                                    <img width=" 70 " src="assets/images/7.jpg " class="img-fluid rounded-circle ">
+                                    <div class="me-3 ">
+                                        <h6 class="fw-bold ">محمد شبیب</h6>
+                                        <p class="text-muted mb-0 ">@MohammadShabib</p>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
+
     </section>
 
-    <script src="assets/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/alpineComponents.js"></script>
+
+    <!-- Bootstrap js CDN -->
+    <script src="assets/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js "></script>
+    <!-- Alpinejs CDN -->
+    <script src="assets/js/alpineComponents.js "></script>
+    <!-- offline counter -->
+    <script src="assets/purecounter_vanilla.js "></script>
+    <!-- onlin counter -->
+    <script src="https://cdn.jsdelivr.net/npm/@srexi/purecounterjs/dist/purecounter_vanilla.js "></script>
+    <script>
+        new PureCounter();
+    </script>
+    <!-- End of counter -->
 
 </html>
