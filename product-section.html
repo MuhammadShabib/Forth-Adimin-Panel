@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="assets/bootstrap-5.3.2-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/bootstrap-icons-1.11.1/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+</head>
+
+<body>
+    <section x-data="toggleSidebar">
+        <section x-cloak class="sidebar" :class="open || 'inactive'">
+            <div>
+                <div class="d-flex align-items-center justify-content-between justify-content-lg-center">
+                    <h4 class="fw-bold text-lg-center"> M S H </h4>
+                    <i @click="toggle" class="d-lg-none bi bi-x toggl"></i></div>
+                <div class="mt-4">
+                    <ul class="list-unstyled">
+                        <li class="sidebar-item active">
+                            <a href="index.html" class="sidebar-link">
+                                <i class="ms-2 bi bi-grid-fill "></i>
+                                <span class="ml-3">داشبورد</span>
+                            </a>
+                        </li>
+                        <li x-data="dropdown" class="sidebar-item">
+                            <div @click="toggle" class="sidebar-link">
+                                <i class="ms-2 bi bi-shop"></i>
+                                <span>فروشگاه</span>
+                                <i class="bi bi-chevron-down me-auto"></i>
+                            </div>
+                            <ul x-show="open" x-transition class="submenu">
+                                <li class="submenu-item">
+                                    <a href="#"> لیست فروشگاه ها</a>
+                                </li>
+                                <li class="submenu-item">
+                                    <a href="#"> ایجاد فروشگاه </a>
+                                </li>
+                                <li class="submenu-item">
+                                    <a href="#"> ویرایش فروشگاه</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li x-data="dropdown" class="sidebar-item">
+                            <div @click="toggle" class="sidebar-link">
+                                <i class="ms-2 bi bi-box-seam"></i>
+                                <span>محصولات</span>
+                                <i class="bi bi-chevron-down me-auto"></i>
+                            </div>
+                            <ul x-show="open" x-transition class="submenu">
+                                <li class="submenu-item">
+                                    <a href="#"> لیست محصولات</a>
+                                </li>
+                                <li class="submenu-item">
+                                    <a href="#"> ایجاد محصول </a>
+                                </li>
+                                <li class="submenu-item">
+                                    <a href="#"> ویرایش محصول</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li x-data="dropdown" class="sidebar-item">
+                            <div @click="toggle" class="sidebar-link">
+                                <i class="ms-2 bi bi-basket-fill"></i>
+                                <span>سفارشات</span>
+                                <i class="bi bi-chevron-down me-auto"></i>
+                            </div>
+                            <ul x-show="open" x-transition class="submenu">
+                                <li class="submenu-item">
+                                    <a href="#"> لیست سفارشات</a>
+                                </li>
+                                <li class="submenu-item">
+                                    <a href="#"> سفارشات تایید شده </a>
+                                </li>
+                                <li class="submenu-item">
+                                    <a href="#"> سفارشات تایید نشده</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="#" class="sidebar-link">
+                                <i class="ms-2 bi bi-chat-right-dots-fill"></i>
+                                <span class="ml-3">تکت</span>
+                            </a>
+                        </li>
+                        <li x-data="dropdown" class="sidebar-item">
+                            <div @click="toggle" class="sidebar-link">
+                                <i class="ms-2 bi bi-people-fill"></i>
+                                <span>کاربران</span>
+                                <i class="bi bi-chevron-down me-auto"></i>
+                            </div>
+                            <ul x-show="open" x-transition class="submenu">
+                                <li class="submenu-item">
+                                    <a href="#"> لیست کاربران</a>
+                                </li>
+                                <li class="submenu-item">
+                                    <a href="#"> ایجاد کاربر جدید </a>
+                                </li>
+                                <li class="submenu-item">
+                                    <a href="#"> ویرایش کاربر</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li x-data="dropdown" class="sidebar-item">
+                            <div @click="toggle" class="sidebar-link">
+                                <i class="ms-2 bi bi-chat-dots-fill"></i>
+                                <span>کامنت ها</span>
+                                <i class="bi bi-chevron-down me-auto"></i>
+                            </div>
+                            <ul x-show="open" x-transition class="submenu">
+                                <li class="submenu-item">
+                                    <a href="#"> لیست کامنت ها</a>
+                                </li>
+                                <li class="submenu-item">
+                                    <a href="#"> کامنت های تایید شده </a>
+                                </li>
+                                <li class="submenu-item">
+                                    <a href="#"> کامنت های تایید نشده </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+        </section>
+        <section class="main" :class="open || 'active'">
+            <header class="d-flex justify-content-between p-3 align-items-center">
+                <div>
+                    <i @click=" toggle " class="toggle-sidebar-icon bi bi-justify "></i>
+
+                </div>
+                <div class="d-flex align-items-center">
+
+                    <div class="dropdown ">
+                        <div class="dropdown-toggle" data-bs-toggle="dropdown">
+                            <span class="badge bg-red position-absolute top-0 start-100 translate-middle rounded-pill mb-0">4</span>
+                            <i class="bi bi-envelope fs-4 text-gray-600"></i>
+                        </div>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item fs-7" href="#">لورم ایپسوم ادگی نامفهوم</a></li>
+                            <li><a class="dropdown-item fs-7" href="#">>لورم ایپسوم</a></li>
+                            <li><a class="dropdown-item fs-7" href="#">لورم ایپسوم ساختگی</a></li>
+                        </ul>
+                    </div>
+                    <div class="dropdown mx-3">
+                        <div class="dropdown-toggle" data-bs-toggle="dropdown">
+
+                            <i class="bi bi-bell fs-4 text-gray-600"></i>
+                        </div>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item fs-7" href="#">لورم ایپسوم ادگی نامفهوم</a></li>
+                            <li><a class="dropdown-item fs-7" href="#">لورم ایپسوم</a></li>
+                            <li><a class="dropdown-item fs-7" href="#">لورم ایپسوم ساختگی</a></li>
+                        </ul>
+                    </div>
+                    <div class="dropdown " dir="rtl">
+                        <div class="dropdown-toggle profile d-flex align-items-center" data-bs-toggle="dropdown">
+                            <img src="assets/images/7.jpg" class="img-fluid rounded-circle ms-2" width="45" alt="">
+                            <div>
+                                <h6 class="fs-6 fw-bold text-gray-600 mb-0"> محمد شبیب</h6>
+                                <p class="fs-8 text-gray-600 mb-0">سوپر ادمین</p>
+                            </div>
+                        </div>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item fs-7 d-flex align-items-center justify-content-between" href="#">
+                                    <i class="bi bi-person fs-5 ms-1"></i>
+                                    <span>پروفایل</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item fs-7 d-flex align-items-center justify-content-between" href="#">
+                                    <i class="bi bi-gear fs-6"></i>
+                                    <span> تنظیمات </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item fs-7 d-flex align-items-center justify-content-between" href="#">
+                                    <i class=" bi bi-wallet fs-6"></i>
+                                    <span>حساب کاربری</span>
+                                </a>
+                            </li>
+                            <hr class="dropdown-divider">
+                            <li>
+                                <a class="dropdown-item fs-7 d-flex align-items-center justify-content-between" href="#">
+                                    <i class=" bi bi-box-arrow-left fs-5"></i>
+                                    <span>خروج</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </header>
+            <div class="content p-2 p-lg-4 ">
+                <div class="container-fluid">
+                    <div class="row">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="index.html">داشبورد</a></li>
+                                <li class="breadcrumb-item active pe-2" aria-current="page">لیست محصولات</li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <div class="row">
+                        <div class="card">
+                            <div class="card-header text-end">
+                                <button data-bs-toggle="modal" data-bs-target="#exampleModal" class=" btn btn-light-primary">
+                                    <i class="bi bi-funnel-fill"></i>
+                                    فیلتر
+                                </button>
+                            </div>
+                            <div class="card-body">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">نام محصول</th>
+                                            <th scope="col">موجودی</th>
+                                            <th scope="col">قیمت</th>
+                                            <th scope="col">وضعیت</th>
+                                            <th scope="col">عملیات</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="table-group-divider">
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>محصول اول</td>
+                                            <td>3 </td>
+                                            <td> 3223</td>
+                                            <td>تایید شده</td>
+                                            <td>
+                                                <select class="btn-light-primary btn">
+                                                    <option value="0">--عملیات--</option>
+                                                    <option value="1">نمایش</option>
+                                                    <option value="2">ویرایش</option>
+                                                    <option value="2">حذف</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>محصول دوم</td>
+                                            <td>6 </td>
+                                            <td> 2231</td>
+                                            <td>تایید نشده</td>
+                                            <td>
+                                                <select class="btn-light-primary btn">
+                                                    <option value="0">--عملیات--</option>
+                                                    <option value="1">نمایش</option>
+                                                    <option value="2">ویرایش</option>
+                                                    <option value="2">حذف</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>محصول سوم</td>
+                                            <td>31 </td>
+                                            <td> 7800</td>
+                                            <td>تایید شده</td>
+                                            <td>
+                                                <select class="btn-light-primary btn">
+                                                    <option value="0">--عملیات--</option>
+                                                    <option value="1">نمایش</option>
+                                                    <option value="2">ویرایش</option>
+                                                    <option value="2">حذف</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">1</th>
+                                            <td>محصول چهارم</td>
+                                            <td>19 </td>
+                                            <td>1230</td>
+                                            <td>تایید شده</td>
+                                            <td>
+                                                <select class="btn-light-primary btn">
+                                                    <option value="0">--عملیات--</option>
+                                                    <option value="1">نمایش</option>
+                                                    <option value="2">ویرایش</option>
+                                                    <option value="2">حذف</option>
+                                                </select>
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </section>
+    </section>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="#">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">فیلتر محصول</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="exampleInputEmail" class="form-label">ایمیل</label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputEmail" class="form-label">ایمیل</label>
+                            <input type="text" class="form-control">
+                            <select class="form-select"> 
+                                <option value="1">تایید شده</option>
+                                <option value="2">تایید نشده</option>
+                        </select>
+
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">کنسل</button>
+                        <button type="submit" class="btn btn-light-primary">فیلتر</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap js CDN -->
+    <script src="assets/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js "></script>
+    <!-- Alpinejs CDN -->
+    <script src="assets/js/alpineComponents.js "></script>
+
+
+
+
+</html>

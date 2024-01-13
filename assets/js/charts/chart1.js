@@ -1,41 +1,59 @@
-am4core.ready(function () {
+am5.ready(function() {
 
-    // Themes begin
-    am4core.useTheme(am4themes_animated);
-    // Themes end
 
-    // Create chart instance
-    var chart = am4core.create("chartdiv", am4charts.XYChart);
-    chart.scrollbarX = new am4core.Scrollbar();
+    // Create root element
+    // https://www.amcharts.com/docs/v5/getting-started/#Root_element
+    var root = am5.Root.new("chartdiv");
 
-    chart.logo.disabled = true;
-    chart.rtl = true;
 
-    // Add data
-    chart.data = [{
-        "month": "فروردین",
-        "visits": 3025
+    // Set themes
+    // https://www.amcharts.com/docs/v5/concepts/themes/
+    root.setThemes([
+        am5themes_Animated.new(root)
+    ]);
+
+
+
+    // Create chart
+    // https://www.amcharts.com/docs/v5/charts/xy-chart/
+    var chart = root.container.children.push(am5xy.XYChart.new(root, {
+        panX: false,
+        panY: false,
+        wheelX: "panX",
+        wheelY: "zoomX",
+        paddingLeft: 0,
+        paddingRight: 0,
+        layout: root.verticalLayout
+    }));
+
+
+
+    var colors = chart.get("colors");
+    // document.querySelectorAll('.am5-layer-30').style.visits = "none";
+    var data = [{
+        month: "فروردین",
+        visits: 725
     }, {
-        "month": "اردیبهشت",
-        "visits": 1882
+        month: "اردیبهشت",
+        visits: 625
     }, {
-        "month": "خرداد",
-        "visits": 1809
+        month: "خرداد",
+        visits: 602
     }, {
-        "month": "تیر",
-        "visits": 1322
+        month: "تیر",
+        visits: 509
     }, {
-        "month": "مرداد",
-        "visits": 1122
+        month: "مرداد",
+        visits: 322
     }, {
-        "month": "شهریور",
-        "visits": 1114
+        month: "شهریور",
+        visits: 214
     }, {
-        "month": "مهر",
-        "visits": 984
+        month: "مهر",
+        visits: 204
     }, {
-        "month": "آبان",
-        "visits": 711
+        month: "آبان",
+        visits: 198
     }];
 
     prepareParetoData();
@@ -43,78 +61,110 @@ am4core.ready(function () {
     function prepareParetoData() {
         var total = 0;
 
-        for (var i = 0; i < chart.data.length; i++) {
-            var value = chart.data[i].visits;
+        for (var i = 0; i < data.length; i++) {
+            var value = data[i].visits;
             total += value;
         }
 
         var sum = 0;
-        for (var i = 0; i < chart.data.length; i++) {
-            var value = chart.data[i].visits;
+        for (var i = 0; i < data.length; i++) {
+            var value = data[i].visits;
             sum += value;
-            chart.data[i].pareto = sum / total * 100;
+            data[i].pareto = sum / total * 100;
         }
     }
 
+
+
     // Create axes
-    var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-    categoryAxis.dataFields.category = "month";
-    categoryAxis.renderer.grid.template.location = 0;
-    categoryAxis.renderer.minGridDistance = 60;
-    categoryAxis.tooltip.disabled = true;
+    // https://www.amcharts.com/docs/v5/charts/xy-chart/axes/
+    var xRenderer = am5xy.AxisRendererX.new(root, {
+        minGridDistance: 85,
+        minorGridEnabled: true
+    })
 
-    var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-    valueAxis.renderer.minWidth = 50;
-    valueAxis.min = 0;
-    valueAxis.cursorTooltipEnabled = false;
+    var xAxis = chart.xAxes.push(am5xy.CategoryAxis.new(root, {
+        categoryField: "month",
+        renderer: xRenderer
+    }));
 
-    // Create series
-    var series = chart.series.push(new am4charts.ColumnSeries());
-    series.sequencedInterpolation = true;
-    series.dataFields.valueY = "visits";
-    series.dataFields.categoryX = "month";
-    series.tooltipText = "[{categoryX}: bold]{valueY}[/]";
-    series.columns.template.strokeWidth = 0;
+    xRenderer.grid.template.setAll({
+        location: 1
+    })
 
-    series.tooltip.pointerOrientation = "vertical";
+    xRenderer.labels.template.setAll({
+        paddingTop: 20
+    });
 
-    series.columns.template.column.cornerRadiusTopLeft = 10;
-    series.columns.template.column.cornerRadiusTopRight = 10;
-    series.columns.template.column.fillOpacity = 0.8;
+    xAxis.data.setAll(data);
 
-    // on hover, make corner radiuses bigger
-    var hoverState = series.columns.template.column.states.create("hover");
-    hoverState.properties.cornerRadiusTopLeft = 0;
-    hoverState.properties.cornerRadiusTopRight = 0;
-    hoverState.properties.fillOpacity = 1;
+    var yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
+        renderer: am5xy.AxisRendererY.new(root, {
+            strokeOpacity: 0.1
+        })
+    }));
 
-    series.columns.template.adapter.add("fill", function (fill, target) {
-        return chart.colors.getIndex(target.dataItem.index);
+    var paretoAxisRenderer = am5xy.AxisRendererY.new(root, { opposite: true });
+    var paretoAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
+        renderer: paretoAxisRenderer,
+        min: 0,
+        max: 100,
+        strictMinMax: true
+    }));
+
+    paretoAxisRenderer.grid.template.set("forceHidden", true);
+    paretoAxis.set("numberFormat", "#'%");
+
+
+    // Add series
+    // https://www.amcharts.com/docs/v5/charts/xy-chart/series/
+    var series = chart.series.push(am5xy.ColumnSeries.new(root, {
+        xAxis: xAxis,
+        yAxis: yAxis,
+        valueYField: "visits",
+        categoryXField: "month"
+    }));
+
+    series.columns.template.setAll({
+        tooltipText: "{categoryX}: {valueY}",
+        tooltipY: 0,
+        strokeOpacity: 0,
+        cornerRadiusTL: 6,
+        cornerRadiusTR: 6
+    });
+
+    series.columns.template.adapters.add("fill", function(fill, target) {
+        return chart.get("colors").getIndex(series.dataItems.indexOf(target.dataItem));
     })
 
 
-    var paretoValueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-    paretoValueAxis.renderer.opposite = true;
-    paretoValueAxis.min = 0;
-    paretoValueAxis.max = 100;
-    paretoValueAxis.strictMinMax = true;
-    paretoValueAxis.renderer.grid.template.disabled = true;
-    paretoValueAxis.numberFormatter = new am4core.NumberFormatter();
-    paretoValueAxis.numberFormatter.numberFormat = "#'%'"
-    paretoValueAxis.cursorTooltipEnabled = false;
+    // pareto series
+    var paretoSeries = chart.series.push(am5xy.LineSeries.new(root, {
+        xAxis: xAxis,
+        yAxis: paretoAxis,
+        valueYField: "pareto",
+        categoryXField: "month",
+        stroke: root.interfaceColors.get("alternativeBackground"),
+        maskBullets: false
+    }));
 
-    var paretoSeries = chart.series.push(new am4charts.LineSeries())
-    paretoSeries.dataFields.valueY = "pareto";
-    paretoSeries.dataFields.categoryX = "month";
-    paretoSeries.yAxis = paretoValueAxis;
-    paretoSeries.tooltipText = "درصد: {valueY.formatNumber('#.0')}%[/]";
-    paretoSeries.bullets.push(new am4charts.CircleBullet());
-    paretoSeries.strokeWidth = 2;
-    paretoSeries.stroke = new am4core.InterfaceColorSet().getFor("alternativeBackground");
-    paretoSeries.strokeOpacity = 0.5;
+    paretoSeries.bullets.push(function() {
+        return am5.Bullet.new(root, {
+            locationY: 1,
+            sprite: am5.Circle.new(root, {
+                radius: 5,
+                fill: series.get("fill"),
+                stroke: root.interfaceColors.get("alternativeBackground")
+            })
+        })
+    })
 
-    // Cursor
-    chart.cursor = new am4charts.XYCursor();
-    chart.cursor.behavior = "panX";
+    series.data.setAll(data);
+    paretoSeries.data.setAll(data);
 
-}); // end am4core.ready()
+    // Make stuff animate on load
+    // https://www.amcharts.com/docs/v5/concepts/animations/
+    series.appear();
+    chart.appear(1000, 100);
+
+}); // end am5.ready()
